@@ -37,8 +37,8 @@ import './App.css';
 // ─── Static demo fallback / initial state ───────────────────────────────────
 
 const defaultApplications = [
-  { id: 1, title: 'Global Leaders Scholarship', org: 'GlobalEd',  status: 'In Review',  statusClass: 'status-review',     date: 'Applied Oct 1' },
-  { id: 2, title: 'Software Dev Intern',         org: 'TechCorp',  status: 'Submitted',  statusClass: 'status-submitted',  date: 'Applied Oct 5' },
+  { id: 1, title: 'Global Leaders Scholarship', org: 'GlobalEd', status: 'In Review', statusClass: 'status-review', date: 'Applied Oct 1' },
+  { id: 2, title: 'Software Dev Intern', org: 'TechCorp', status: 'Submitted', statusClass: 'status-submitted', date: 'Applied Oct 5' },
 ];
 
 const defaultProfile = {
@@ -51,7 +51,7 @@ const defaultProfile = {
   college: 'National Institute of Technology',
   degree: 'B.Tech',
   bio: 'Aspiring software engineer interested in full-stack development and open source.',
-  
+
   // Internship Profile Fields
   skills: ['React', 'JavaScript', 'Node.js', 'CSS'],
   languages: ['JavaScript', 'Python', 'C++'],
@@ -82,7 +82,7 @@ const defaultProfile = {
 
 const demoNotifications = [
   { id: 1, title: 'Application Status Updated', message: 'Your application for Global Leaders Scholarship is now In Review.', read: false, time: '2 hours ago' },
-  { id: 2, title: 'Upcoming Deadline Alert',   message: 'Women in Tech Scholarship deadline is approaching (Oct 30).', read: false, time: '1 day ago' },
+  { id: 2, title: 'Upcoming Deadline Alert', message: 'Women in Tech Scholarship deadline is approaching (Oct 30).', read: false, time: '1 day ago' },
   { id: 3, title: 'New Opportunities Available', message: 'Explore 3 new engineering internships matched with your profile.', read: true, time: '3 days ago' },
 ];
 
@@ -630,14 +630,14 @@ function InternshipCard({ opp, isSaved, onToggleSave, onViewDetails, onApply }) 
 
 export default function App() {
   // Navigation: 'dashboard' | 'scholarships' | 'internships' | 'saved' | 'applications' | 'profile'
-  const [activeView, setActiveView]           = useState('dashboard');
-  const [searchQuery, setSearchQuery]         = useState('');
-  const [selectedOpportunity, setSelected]    = useState(null);
-  const [sidebarOpen, setSidebarOpen]         = useState(false);
-  const [showNotifications, setShowNotifs]    = useState(false);
+  const [activeView, setActiveView] = useState('dashboard');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedOpportunity, setSelected] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showNotifications, setShowNotifs] = useState(false);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [profileSaveSuccess, setProfileSaveSuccess] = useState(false);
-  const [profileSaving, setProfileSaving]     = useState(false);
+  const [profileSaving, setProfileSaving] = useState(false);
 
   // Filters for Scholarships Page
   const [scholarshipFilters, setScholarshipFilters] = useState({
@@ -663,8 +663,8 @@ export default function App() {
 
   // API State
   const [opportunities, setOpportunities] = useState([]);
-  const [loading, setLoading]             = useState(false);
-  const [error, setError]                 = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Local Storage State
   const [savedOpps, setSavedOpps] = useState(() => {
@@ -702,20 +702,20 @@ export default function App() {
   });
 
   // Form state for profile editing
-  const [editFormData, setEditFormData]       = useState(profile);
-  const [formErrors, setFormErrors]           = useState({});
+  const [editFormData, setEditFormData] = useState(profile);
+  const [formErrors, setFormErrors] = useState({});
   const [activeProfileTab, setActiveProfileTab] = useState('basic'); // 'basic' | 'internship' | 'scholarship'
-  const [newSkillInput, setNewSkillInput]     = useState('');
-  const [newLangInput, setNewLangInput]       = useState('');
-  const [newFwInput, setNewFwInput]           = useState('');
-  const [newRoleInput, setNewRoleInput]       = useState('');
-  const [newProject, setNewProject]           = useState({ name: '', description: '', url: '' });
+  const [newSkillInput, setNewSkillInput] = useState('');
+  const [newLangInput, setNewLangInput] = useState('');
+  const [newFwInput, setNewFwInput] = useState('');
+  const [newRoleInput, setNewRoleInput] = useState('');
+  const [newProject, setNewProject] = useState({ name: '', description: '', url: '' });
 
   // Sync to localStorage
-  useEffect(() => localStorage.setItem('sahay_saved_opps',    JSON.stringify(savedOpps)),    [savedOpps]);
-  useEffect(() => localStorage.setItem('sahay_apps',          JSON.stringify(applications)), [applications]);
-  useEffect(() => localStorage.setItem('sahay_profile',       JSON.stringify(profile)),      [profile]);
-  useEffect(() => localStorage.setItem('sahay_notifications', JSON.stringify(notifications)),[notifications]);
+  useEffect(() => localStorage.setItem('sahay_saved_opps', JSON.stringify(savedOpps)), [savedOpps]);
+  useEffect(() => localStorage.setItem('sahay_apps', JSON.stringify(applications)), [applications]);
+  useEffect(() => localStorage.setItem('sahay_profile', JSON.stringify(profile)), [profile]);
+  useEffect(() => localStorage.setItem('sahay_notifications', JSON.stringify(notifications)), [notifications]);
 
   // Handle ESC key for modals
   useEffect(() => {
@@ -735,7 +735,7 @@ export default function App() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch('http://localhost:5000/api/opportunities');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/opportunities`);
       if (!res.ok) throw new Error(`Server responded with ${res.status}`);
       const data = await res.json();
       setOpportunities(Array.isArray(data) ? data : []);
@@ -973,8 +973,8 @@ export default function App() {
   const handleStatusChange = (appId, newStatus) => {
     const classMap = {
       'In Review': 'status-review',
-      'Accepted':  'status-accepted',
-      'Rejected':  'status-rejected',
+      'Accepted': 'status-accepted',
+      'Rejected': 'status-rejected',
       'Submitted': 'status-submitted',
     };
     setApplications(prev =>
@@ -1128,13 +1128,13 @@ export default function App() {
   // ── Navigation Configuration ─────────────────────────────────────────────────
 
   const navItems = [
-    { view: 'dashboard',     icon: <LayoutDashboard size={19} />, label: 'Dashboard' },
-    { view: 'scholarships',  icon: <GraduationCap size={19} />,   label: 'Scholarships',  badge: allScholarships.length },
-    { view: 'internships',   icon: <Briefcase size={19} />,       label: 'Internships',   badge: allInternships.length },
-    { view: 'deadlines',     icon: <Clock size={19} />,           label: 'Upcoming Deadlines', badge: upcomingOpportunities.length },
-    { view: 'saved',         icon: <Bookmark size={19} />,        label: 'My Saved Opportunities', badge: savedOpps.length },
-    { view: 'applications',  icon: <FileText size={19} />,        label: 'My Applications', badge: applications.length },
-    { view: 'profile',       icon: <User size={19} />,            label: 'My Profile' },
+    { view: 'dashboard', icon: <LayoutDashboard size={19} />, label: 'Dashboard' },
+    { view: 'scholarships', icon: <GraduationCap size={19} />, label: 'Scholarships', badge: allScholarships.length },
+    { view: 'internships', icon: <Briefcase size={19} />, label: 'Internships', badge: allInternships.length },
+    { view: 'deadlines', icon: <Clock size={19} />, label: 'Upcoming Deadlines', badge: upcomingOpportunities.length },
+    { view: 'saved', icon: <Bookmark size={19} />, label: 'My Saved Opportunities', badge: savedOpps.length },
+    { view: 'applications', icon: <FileText size={19} />, label: 'My Applications', badge: applications.length },
+    { view: 'profile', icon: <User size={19} />, label: 'My Profile' },
   ];
 
   // ── Render Helpers ───────────────────────────────────────────────────────────
@@ -2213,7 +2213,7 @@ export default function App() {
 
               {/* Three Distinct Coordinated Profile Sections */}
               <div className="profile-sections-stack">
-                
+
                 {/* ── SECTION 1: BASIC DETAILS & EDUCATION (Blue Accent) ── */}
                 <div className="profile-section-card basic-section-card">
                   <div className="profile-section-header">
